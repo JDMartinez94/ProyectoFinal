@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditPacientesTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditPacientesLabel_idPaciente}" for="idPaciente" />
+                    <h:inputText id="idPaciente" value="#{pacientesController.selected.idPaciente}" title="#{bundle.EditPacientesTitle_idPaciente}" required="true" requiredMessage="#{bundle.EditPacientesRequiredMessage_idPaciente}"/>
+                    <h:outputLabel value="#{bundle.EditPacientesLabel_nombresPaciente}" for="nombresPaciente" />
+                    <h:inputText id="nombresPaciente" value="#{pacientesController.selected.nombresPaciente}" title="#{bundle.EditPacientesTitle_nombresPaciente}" />
+                    <h:outputLabel value="#{bundle.EditPacientesLabel_apellidosPaciente}" for="apellidosPaciente" />
+                    <h:inputText id="apellidosPaciente" value="#{pacientesController.selected.apellidosPaciente}" title="#{bundle.EditPacientesTitle_apellidosPaciente}" />
+                    <h:outputLabel value="#{bundle.EditPacientesLabel_fechaNacPaciente}" for="fechaNacPaciente" />
+                    <h:inputText id="fechaNacPaciente" value="#{pacientesController.selected.fechaNacPaciente}" title="#{bundle.EditPacientesTitle_fechaNacPaciente}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditPacientesLabel_telPaciente}" for="telPaciente" />
+                    <h:inputText id="telPaciente" value="#{pacientesController.selected.telPaciente}" title="#{bundle.EditPacientesTitle_telPaciente}" />
+                    <h:outputLabel value="#{bundle.EditPacientesLabel_emailPaciente}" for="emailPaciente" />
+                    <h:inputText id="emailPaciente" value="#{pacientesController.selected.emailPaciente}" title="#{bundle.EditPacientesTitle_emailPaciente}" />
+                    <h:outputLabel value="#{bundle.EditPacientesLabel_direccionPaciente}" for="direccionPaciente" />
+                    <h:inputText id="direccionPaciente" value="#{pacientesController.selected.direccionPaciente}" title="#{bundle.EditPacientesTitle_direccionPaciente}" />
+                    <h:outputLabel value="#{bundle.EditPacientesLabel_nombreemergPaciente}" for="nombreemergPaciente" />
+                    <h:inputText id="nombreemergPaciente" value="#{pacientesController.selected.nombreemergPaciente}" title="#{bundle.EditPacientesTitle_nombreemergPaciente}" />
+                    <h:outputLabel value="#{bundle.EditPacientesLabel_telemergPaciente}" for="telemergPaciente" />
+                    <h:inputText id="telemergPaciente" value="#{pacientesController.selected.telemergPaciente}" title="#{bundle.EditPacientesTitle_telemergPaciente}" />
+                </h:panelGrid>
+                <h:commandLink action="#{pacientesController.update}" value="#{bundle.EditPacientesSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditPacientesViewLink}"/>
+                <br />
+                <h:commandLink action="#{pacientesController.prepareList}" value="#{bundle.EditPacientesShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditPacientesIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

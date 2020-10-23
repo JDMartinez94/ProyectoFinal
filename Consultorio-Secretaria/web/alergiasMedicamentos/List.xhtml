@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListAlergiasMedicamentosTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListAlergiasMedicamentosEmpty}" rendered="#{alergiasMedicamentosController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{alergiasMedicamentosController.items.rowCount > 0}">
+                    <h:outputText value="#{alergiasMedicamentosController.pagination.pageFirstItem + 1}..#{alergiasMedicamentosController.pagination.pageLastItem + 1}/#{alergiasMedicamentosController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{alergiasMedicamentosController.previous}" value="#{bundle.Previous} #{alergiasMedicamentosController.pagination.pageSize}" rendered="#{alergiasMedicamentosController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{alergiasMedicamentosController.next}" value="#{bundle.Next} #{alergiasMedicamentosController.pagination.pageSize}" rendered="#{alergiasMedicamentosController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{alergiasMedicamentosController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAlergiasMedicamentosTitle_idAlergia}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idAlergia}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAlergiasMedicamentosTitle_alergiaAMed}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.alergiaAMed}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAlergiasMedicamentosTitle_idPaciente}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idPaciente}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{alergiasMedicamentosController.prepareView}" value="#{bundle.ListAlergiasMedicamentosViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{alergiasMedicamentosController.prepareEdit}" value="#{bundle.ListAlergiasMedicamentosEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{alergiasMedicamentosController.destroy}" value="#{bundle.ListAlergiasMedicamentosDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{alergiasMedicamentosController.prepareCreate}" value="#{bundle.ListAlergiasMedicamentosCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListAlergiasMedicamentosIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
