@@ -165,6 +165,39 @@ public class DAOcitas implements Operaciones {
         }
        return datos;
     }
+    
+    
+    public List<citas> consultar3() {
+        List<citas> datos = new ArrayList<>();
+        Connection conn;
+        PreparedStatement pst;
+        ResultSet rs;
+        String sql = "select c.idCita, p.nombresPaciente, p.apellidosPaciente, c.fechaCita, c.horaCita, c.statusCita, u.nombreUsuario\n" +
+                    "from citas c \n" +
+                    "join pacientes p on p.idPaciente = c.idPaciente\n" +
+                    "join usuarios u on u.idUsuario = c.idUsuario\n" +
+                    "where fechaCita > CURDATE();";
+        try {
+            Class.forName(db.getDriver());
+            conn = DriverManager.getConnection(
+            db.getUrl(),db.getUsuario(), db.getContraseña());
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while(rs.next()){
+                datos.add(new citas(
+                        rs.getInt("idCita"), 
+                        new pacientes(rs.getString("nombresPaciente"), rs.getString("apellidosPaciente")),
+                        rs.getDate("fechaCita"),
+                        rs.getTime("horaCita"),
+                        rs.getString("statusCita"),
+                        new usuarios(rs.getString("nombreUsuario"))));
+            }
+            conn.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            
+        }
+       return datos;
+    }
 
     @Override
     public List<citas> filtrar(String campo, String criterio) {
