@@ -139,11 +139,12 @@ public class DAOcitas implements Operaciones {
         Connection conn;
         PreparedStatement pst;
         ResultSet rs;
-        String sql = "select c.idCita, p.nombresPaciente, p.apellidosPaciente, c.fechaCita, c.horaCita, c.statusCita, u.nombreUsuario\n" +
+        String sql = "select c.idCita, c.idPaciente, p.nombresPaciente, p.apellidosPaciente, c.fechaCita, c.horaCita, c.statusCita, u.nombreUsuario, u.idUsuario\n" +
                     "from citas c \n" +
                     "join pacientes p on p.idPaciente = c.idPaciente\n" +
                     "join usuarios u on u.idUsuario = c.idUsuario\n" +
-                    "where fechaCita = CURDATE();";
+                    "where fechaCita = CURDATE()\n" +
+                    "order by horaCita asc; ";
         try {
             Class.forName(db.getDriver());
             conn = DriverManager.getConnection(
@@ -153,11 +154,11 @@ public class DAOcitas implements Operaciones {
             while(rs.next()){
                 datos.add(new citas(
                         rs.getInt("idCita"), 
-                        new pacientes(rs.getString("nombresPaciente"), rs.getString("apellidosPaciente")),
+                        new pacientes(rs.getString("nombresPaciente"), rs.getString("apellidosPaciente"), rs.getInt("idPaciente")),
                         rs.getDate("fechaCita"),
                         rs.getTime("horaCita"),
                         rs.getString("statusCita"),
-                        new usuarios(rs.getString("nombreUsuario"))));
+                        new usuarios(rs.getString("nombreUsuario"), rs.getInt("idUsuario"))));
             }
             conn.close();
         } catch (ClassNotFoundException | SQLException e) {
@@ -172,11 +173,12 @@ public class DAOcitas implements Operaciones {
         Connection conn;
         PreparedStatement pst;
         ResultSet rs;
-        String sql = "select c.idCita, p.nombresPaciente, p.apellidosPaciente, c.fechaCita, c.horaCita, c.statusCita, u.nombreUsuario\n" +
+        String sql = "select c.idCita, c.idPaciente, p.nombresPaciente, p.apellidosPaciente, c.fechaCita, c.horaCita, c.statusCita, u.nombreUsuario, u.idUsuario\n" +
                     "from citas c \n" +
                     "join pacientes p on p.idPaciente = c.idPaciente\n" +
                     "join usuarios u on u.idUsuario = c.idUsuario\n" +
-                    "where fechaCita > CURDATE();";
+                    "where fechaCita > CURDATE()\n" +
+                    "order by fechaCita asc; ";
         try {
             Class.forName(db.getDriver());
             conn = DriverManager.getConnection(
@@ -186,11 +188,11 @@ public class DAOcitas implements Operaciones {
             while(rs.next()){
                 datos.add(new citas(
                         rs.getInt("idCita"), 
-                        new pacientes(rs.getString("nombresPaciente"), rs.getString("apellidosPaciente")),
+                        new pacientes(rs.getString("nombresPaciente"), rs.getString("apellidosPaciente"), rs.getInt("idPaciente")),
                         rs.getDate("fechaCita"),
                         rs.getTime("horaCita"),
                         rs.getString("statusCita"),
-                        new usuarios(rs.getString("nombreUsuario"))));
+                         new usuarios(rs.getString("nombreUsuario"), rs.getInt("idUsuario"))));
             }
             conn.close();
         } catch (ClassNotFoundException | SQLException e) {

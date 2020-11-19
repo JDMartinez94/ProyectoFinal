@@ -67,9 +67,11 @@
                 List<usuarios> data = (List<usuarios>)request.getAttribute("login");
                 String uss = data.get(0).getNombreUsuario(); 
                 String tipo = data.get(0).getTipoUsuario();
+                int iduser = data.get(0).getIdUsuario();
                 
                 ses.setAttribute("usuario", uss);
                 ses.setAttribute("tipousuario", tipo);
+                ses.setAttribute("iduser", iduser);
                 
                 response.sendRedirect("index.jsp");
             }

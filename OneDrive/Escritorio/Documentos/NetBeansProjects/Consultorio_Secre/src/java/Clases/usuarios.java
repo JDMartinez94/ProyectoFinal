@@ -16,11 +16,13 @@ public class usuarios {
         this.idUsuario = idUsuario;
     }
     
-    public usuarios(String nombreUsuario) {
+    public usuarios(String nombreUsuario, int idUsuario) {
         this.nombreUsuario = nombreUsuario;
+        this.idUsuario = idUsuario;
     }
     
-    public usuarios(String nombreUsuario, String tipoUsuario) {
+    public usuarios(int idUsuario, String nombreUsuario, String tipoUsuario) {
+        this.idUsuario = idUsuario;
         this.nombreUsuario = nombreUsuario;
         this.tipoUsuario = tipoUsuario;
     }

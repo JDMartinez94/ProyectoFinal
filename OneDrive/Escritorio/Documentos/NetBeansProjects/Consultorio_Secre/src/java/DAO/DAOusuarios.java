@@ -161,7 +161,7 @@ public class DAOusuarios implements Operaciones{
         Connection con; 
         PreparedStatement pst; 
         ResultSet rs; 
-        String sql = "select nombreUsuario, tipoUsuario from usuarios where nombreUsuario= '"+user+"' and contra ='"+pw+"'"; 
+        String sql = "select idUsuario, nombreUsuario, tipoUsuario from usuarios where nombreUsuario= '"+user+"' and contra ='"+pw+"'"; 
         
         try {
             Class.forName(db.getDriver());
@@ -171,7 +171,7 @@ public class DAOusuarios implements Operaciones{
             
             while(rs.next())
             {
-                data.add(new usuarios(rs.getString("nombreusuario"), rs.getString("tipoUsuario")));
+                data.add(new usuarios(rs.getInt("idUsuario"), rs.getString("nombreusuario"), rs.getString("tipoUsuario")));
             }
             
             con.close();

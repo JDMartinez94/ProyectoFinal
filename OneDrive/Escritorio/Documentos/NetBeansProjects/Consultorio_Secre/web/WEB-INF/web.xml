@@ -4,9 +4,25 @@
         <servlet-name>ctrlLogin</servlet-name>
         <servlet-class>Controller.ctrlLogin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ctrlCitas</servlet-name>
+        <servlet-class>Controller.ctrlCitas</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ctrlExpediente</servlet-name>
+        <servlet-class>Controller.ctrlExpediente</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ctrlLogin</servlet-name>
         <url-pattern>/ctrlLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ctrlCitas</servlet-name>
+        <url-pattern>/ctrlCitas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ctrlExpediente</servlet-name>
+        <url-pattern>/ctrlExpediente</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

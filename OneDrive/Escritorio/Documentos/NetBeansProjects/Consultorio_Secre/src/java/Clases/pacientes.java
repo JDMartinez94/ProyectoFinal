@@ -22,9 +22,10 @@ public class pacientes {
         this.idPaciente = idPaciente;
     }
     
-    public pacientes(String nombresPaciente, String apellidosPaciente) {
+    public pacientes(String nombresPaciente, String apellidosPaciente, int idPaciente) {
         this.nombresPaciente = nombresPaciente;
         this.apellidosPaciente = apellidosPaciente;
+        this.idPaciente = idPaciente;
     }
     
     

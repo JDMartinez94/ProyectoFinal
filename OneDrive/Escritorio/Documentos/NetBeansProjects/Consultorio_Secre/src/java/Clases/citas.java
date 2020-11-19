@@ -12,9 +12,9 @@ public class citas {
     private Time horaCita; 
     private String statusCita; 
     private usuarios idUsuario;
-    private pacientes nombresPaciente;
-    private pacientes apellidosPaciente;
+    private pacientes nombrePaciente;
     private usuarios nombreUsuario;
+    
 
     public citas() {
     }
@@ -31,16 +31,7 @@ public class citas {
         this.statusCita = statusCita;
         this.idUsuario = idUsuario;
     }
-    
-    public citas(int idCita, pacientes nombresPaciente, pacientes apellidosPaciente, Date fechaCita, Time horaCita, String statusCita, usuarios nombreUsuario) {
-        this.idCita = idCita;
-        this.nombresPaciente = nombresPaciente;
-        this.apellidosPaciente = apellidosPaciente;
-        this.fechaCita = fechaCita;
-        this.horaCita = horaCita;
-        this.statusCita = statusCita;
-        this.nombreUsuario = nombreUsuario;
-    }
+        
 
     public usuarios getIdUsuario() {
         return idUsuario;
