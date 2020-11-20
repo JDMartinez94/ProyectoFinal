@@ -158,14 +158,18 @@
             response.setDateHeader ("Expires", 0);
 
         %>
-        
-            <button style="margin-left: 4%; font-family: Verdana; font-size: 17px; " type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#miModal">
-                Ingresar Nueva Cita
-            </button>
-            <button style="margin-left: 1%; font-family: Verdana; font-size: 17px; " type="button" class="btn btn-primary btn-lg" onclick="location.href='${pageContext.request.contextPath}/vistas/vExpediente.jsp'">
-                Expediente Paciente
-            </button>    
-                
+        <div style="margin-left: 4%;" class="row">
+                <div class="span6">
+                    <button style="font-family: Verdana; font-size: 17px;" type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#miModal">
+                        Ingresar Nueva Cita
+                    </button><br><br>
+                </div>  
+                <div class="span6">
+                    <form style="margin-left: 10%; font-family: Verdana; font-size: 17px; " action="${pageContext.request.contextPath}/ctrlExpediente" method="POST" name="formu">
+                        <input type="submit" name="btnMandarAExpediente" class="btn btn-primary btn-lg" value="Expedientes Pacientes"/><br>
+                     </form>  
+                </div>    
+            </div>    
             <br><br>
             <h1 style="margin-left: 75px">Citas del día de Hoy</h1>
             <hr>       

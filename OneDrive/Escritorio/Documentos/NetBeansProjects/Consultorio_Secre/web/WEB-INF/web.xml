@@ -12,6 +12,10 @@
         <servlet-name>ctrlExpediente</servlet-name>
         <servlet-class>Controller.ctrlExpediente</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ctrlOperaciones</servlet-name>
+        <servlet-class>Controller.ctrlOperaciones</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ctrlLogin</servlet-name>
         <url-pattern>/ctrlLogin</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>ctrlExpediente</servlet-name>
         <url-pattern>/ctrlExpediente</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ctrlOperaciones</servlet-name>
+        <url-pattern>/ctrlOperaciones</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -125,6 +125,32 @@ public class DAOoperaciones implements Operaciones {
         }
        return datos;
     }
+    
+    public List<operaciones> consultarxpac(int idpaci) {
+        List<operaciones> datos = new ArrayList<>();
+        Connection conn;
+        PreparedStatement pst;
+        ResultSet rs;
+        String sql = "select * from operaciones where idPaciente = " + idpaci;
+        try {
+            Class.forName(db.getDriver());
+            conn = DriverManager.getConnection(
+            db.getUrl(),db.getUsuario(), db.getContraseña());
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while(rs.next()){
+                datos.add(new operaciones(
+                        rs.getInt("idOperacion"), 
+                        new pacientes (rs.getInt("idPaciente")),
+                        rs.getString("operacion"),
+                        rs.getInt("anioOper")));
+            }
+            conn.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            
+        }
+       return datos;
+    }
 
     @Override
     public List<operaciones> filtrar(String campo, String criterio) {

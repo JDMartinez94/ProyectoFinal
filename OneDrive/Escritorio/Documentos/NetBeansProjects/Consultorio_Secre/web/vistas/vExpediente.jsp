@@ -4,6 +4,8 @@
     Author     : andie
 --%>
 
+<%@page import="Clases.*"%>
+<%@page import="DAO.*"%>
 <%@page import="Clases.pacientes"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -29,7 +31,7 @@
             }
         </style>
         
-        <script>
+        <script type="text/javascript">
             function cargarMO(id,nom,ape,fenac,telpac,email,dir,cont,telcont)
             {
                 document.modalito.txtidPac.value=id; 
@@ -58,11 +60,31 @@
                 document.modalito.txtemail.value=email;
                 document.modalito.txtdirPac.value=dir;
                 document.modalito.txtnomEme.value=cont;
-                document.modalito.txttelEme.value=telcont;;
+                document.modalito.txttelEme.value=telcont;
                 
                 document.modalito.opcion.value='eliminar';
                 document.modalito.btnGuardar.value='Eliminar';
                 document.modalito.btnGuardar.className='btn btn-danger';
+                
+            }
+            
+                 
+            function cargarIDPAC(id)
+            {
+                document.formu.pruebaID.value=id;
+                
+            }
+            
+            function cargarOPE(idope,idpac,ope,anio)
+            {
+                document.modalito.txtidPac.value=idope; 
+                document.modalito.txtnomPac.value=idpac;
+                document.modalito.txtapePac.value=ope;
+                document.modalito.txtfechaNac.value=anio;
+                
+                document.modalito.opcion.value='modificar';
+                document.modalito.btnGuardar.value='Modificar';
+                document.modalito.btnGuardar.className='btn btn-success';
                 
             }
         </script>        
@@ -115,7 +137,7 @@
             data = dao.consultar();
         %>
         
-            <div style="width: 1500px; position: relative; margin-left: 4%;">
+            <div style="width: 1550px; position: relative; margin-left: 4%;">
         
             <table border="1" class="table table-dark">
                 <thead class="thead-dark" style="font-size: 18px; font-weight: 900;">
@@ -130,6 +152,7 @@
                         <th>CONTACTO DE EMERGENCIA</th>
                         <th>TELEFONO DE CONTACTO</th>
                         <th>ACCIONES</th>
+                        <th>VER INFO ADICIONAL</th>
                     </tr>
                 </thead>
                 <tbody style="font-size: 16px; font-weight: 700; ">        
@@ -153,9 +176,13 @@
                             </a>
                             <a href="javascript:cargarDel('<%= p.getIdPaciente()%>','<%= p.getNombresPaciente()%>','<%= p.getApellidosPaciente() %>','<%= p.getFechaNacPaciente()%>','<%= p.getTelPaciente()%>','<%= p.getEmailPaciente()%>','<%= p.getDireccionPaciente()%>','<%= p.getNombreemergPaciente()%>','<%= p.getTelemergPaciente()%>');">
                                 <img src="${pageContext.request.contextPath}/recursos/eliminar.jpg" data-toggle="modal" data-target="#miModal">
-                            </a>
+                            </a>    
                         </td>
-                        
+                        <td>
+                            <button style="margin-left: 4%; font-family: Verdana; font-size: 17px; " type="button" class="btn btn-primary" onclick="cargarIDPAC(<%= p.getIdPaciente()%>)">
+                                Seleccionar
+                            </button>
+                        </td>
                     </tr>
         <%
             }
@@ -189,6 +216,143 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
+                                
+        <div class="modal fade" id="miModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Formulario de Registro</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <form action="${pageContext.request.contextPath}/ctrlOperaciones" method="POST" name="modalito2">
+                                <input type="text" name="txtidOpe" placeholder="idPaciente" readonly="readonly" class="form-control" /><br>
+                                <input type="text" name="txtidPac" readonly="readonly" value="<%=request.getSession().getAttribute("rayos")%>" class="form-control" /><br>
+                                <input type="text" name="txtOpe" placeholder="Nombre de la Operacion" class="form-control" /><br>
+                                <input type="text" name="txtanio" placeholder="Fecha Ope: AAAA" class="form-control" /><br>
+                                <input type="submit" name="btnGuardar" class="btn btn-primary" value="Guardar"/><br>
+                                <input type="hidden" value="nuevo" name="opcion" /><br>
+                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>                                 
+         
+        <br><br>                        
+        <h1 style="margin-left: 75px">Información Adicional del Expediente Seleccionado</h1>
+        <hr>  
+        <div style="position: relative; margin-left: 4%;"  class="form-group">
+            <label style="font-family: Verdana; font-size: 15px;" for="exampleInputEmail1" class="col-sm-1 col-form-label">ID Paciente</label>
+            <form action="${pageContext.request.contextPath}/ctrlExpediente" method="POST" name="formu">
+                <div class="col-sm-1">
+                    <input type="text" name="pruebaID" value="0" class="form-control" />
+                </div>    
+                <input type="submit" name="btnprueba" class="btn btn-success btn-md" value="Desplegar"/><br>
+            </form>
+        </div>                        
+
+        <%
+            DAOcitas daocitas = new DAOcitas();
+            List<citas> datacitas = new ArrayList<>();
+            datacitas = daocitas.consultarxpac(Integer.parseInt(request.getSession().getAttribute("rayos").toString()));
+        %>
+                                
+        <div id="historial">
+        
+        <br><br>                        
+        <h2 style="margin-left: 75px">Historial de Citas</h2>
+        <hr>
+        
+            <div style="width: 1000px; position: relative; margin-left: 4%;">
+                <table border="1" class="table table-dark">
+                    <thead class="thead-dark" style="font-size: 18px; font-weight: 900;">
+                        <tr>
+                            <th>ID CITA</th>
+                            <th>ID PACIENTE</th>
+                            <th>FECHA CITA</th>
+                            <th>HORA CITA</th>
+                            <th>STATUS CITA</th>
+                            <th>INGRESADA POR</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: 16px; font-weight: 700; ">        
+        <%
+            for(citas c : datacitas)
+            {                                        
+        %>
+                        <tr>
+                            <td><%= c.getIdCita()%></td>
+                            <td><%= c.getIdPaciente().getIdPaciente()%></td>
+                            <td><%= c.getFechaCita()%></td>
+                            <td><%= c.getHoraCita()%></td>
+                            <td><%= c.getStatusCita()%></td>
+                            <td><%= c.getIdUsuario().getIdUsuario()%></td>
+
+                        </tr>
+        <%
+            }
+        %>
+                    </tbody>
+                </table>   
+            </div>        
+        </div>         
+
+
+        <%
+            DAOoperaciones daoope = new DAOoperaciones();
+            List<operaciones> dataope = new ArrayList<>();
+            dataope = daoope.consultarxpac(Integer.parseInt(request.getSession().getAttribute("rayos").toString()));
+        %>
+        
+        <br><br><br>
+        <button style="margin-left: 4%; font-family: Verdana; font-size: 17px; " type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#miModal2">
+                Agregar Operaciones al Expediente
+        </button>
+                                
+        <div id="historial">
+        
+                               
+        <h2 style="margin-left: 75px">Historial de Operaciones</h2>
+        <hr>
+        
+            <div style="width: 1000px; position: relative; margin-left: 4%;">
+                <table border="1" class="table table-dark">
+                    <thead class="thead-dark" style="font-size: 18px; font-weight: 900;">
+                        <tr>
+                            <th>ID OPERACION</th>
+                            <th>ID PACIENTE</th>
+                            <th>OPERACION</th>
+                            <th>AÑO OPERACION</th>
+                            <th>ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: 16px; font-weight: 700; ">        
+        <%
+            for(operaciones o : dataope)
+            {                                        
+        %>
+                        <tr>
+                            <td><%= o.getIdOperacion()%></td>
+                            <td><%= o.getIdPaciente().getIdPaciente()%></td>
+                            <td><%= o.getOperacion()%></td>
+                            <td><%= o.getAnioOper()%></td>
+                            <td>
+                            <a href="javascript:cargarOPE('<%= o.getIdOperacion()%>','<%= o.getIdPaciente().getIdPaciente()%>','<%= o.getOperacion()%>','<%= o.getAnioOper()%>');">
+                                <img src="${pageContext.request.contextPath}/recursos/editar.jpg" data-toggle="modal" data-target="#miModal">
+                            </a>
+                            <a href="javascript:cargarOPE('<%= o.getIdOperacion()%>','<%= o.getIdPaciente().getIdPaciente()%>','<%= o.getOperacion()%>','<%= o.getAnioOper()%>');">
+                                <img src="${pageContext.request.contextPath}/recursos/eliminar.jpg" data-toggle="modal" data-target="#miModal">
+                            </a>    
+                        </td>
+                        </tr>
+        <%
+            }
+        %>
+                    </tbody>
+                </table>   
+            </div>        
+        </div>          
     </body>
 </html>

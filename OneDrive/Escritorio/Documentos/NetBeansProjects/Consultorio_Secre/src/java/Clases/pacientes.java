@@ -41,6 +41,7 @@ public class pacientes {
         this.telemergPaciente = telemergPaciente;
     }
 
+
     public String getTelemergPaciente() {
         return telemergPaciente;
     }

@@ -5,13 +5,11 @@
  */
 package Controller;
 
-import Clases.pacientes;
-import Clases.usuarios;
-import DAO.DAOpacientes;
+import Clases.operaciones;
+import DAO.DAOoperaciones;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author andie
  */
-public class ctrlExpediente extends HttpServlet {
+public class ctrlOperaciones extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,25 +37,18 @@ public class ctrlExpediente extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            DAOpacientes dao = new DAOpacientes(); 
-            pacientes pac = new pacientes();
-            List<pacientes> data = new ArrayList<>();
-            String respuesta="";
             
+                DAOoperaciones dao = new DAOoperaciones(); 
+                operaciones opes = new operaciones();
+                List<operaciones> data = new ArrayList<>();
+                String respuesta="";
             
-            
-            try {
                 if(request.getParameter("btnGuardar")!=null && request.getParameter("opcion")!=null)
                 {
                     String op = request.getParameter("opcion");
                     
                     if(op.equals("nuevo"))
                     {
-                        String txtfechaNac = request.getParameter("txtfechaNac");
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                        java.util.Date date = sdf.parse(txtfechaNac);
-                        java.sql.Date sqlDate = new Date(date.getTime());
-
                         pac.setNombresPaciente(request.getParameter("txtnomPac"));
                         pac.setApellidosPaciente(request.getParameter("txtapePac"));
                         pac.setFechaNacPaciente(sqlDate);
@@ -107,25 +98,6 @@ public class ctrlExpediente extends HttpServlet {
                     
                          
                 }
-                
-                
-                if(request.getParameter("btnprueba")!=null)
-                {
-                    String pruebaIDStr = request.getParameter("pruebaID");
-                    request.getSession().setAttribute("rayos", pruebaIDStr);
-                    response.sendRedirect(request.getContextPath() + "/vistas/vExpediente.jsp");
-                }
-                
-                if(request.getParameter("btnMandarAExpediente")!=null)
-                {
-                    request.getSession().setAttribute("rayos", 0);
-                    response.sendRedirect(request.getContextPath() + "/vistas/vExpediente.jsp");
-                }
-                
-                
-            } catch (Exception e) {
-            }            
-            
         }
     }
 

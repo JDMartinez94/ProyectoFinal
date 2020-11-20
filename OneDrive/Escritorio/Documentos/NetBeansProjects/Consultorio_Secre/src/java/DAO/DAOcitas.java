@@ -133,6 +133,34 @@ public class DAOcitas implements Operaciones {
        return datos;
     }
     
+    public List<citas> consultarxpac( int idpaci) {
+        List<citas> datos = new ArrayList<>();
+        Connection conn;
+        PreparedStatement pst;
+        ResultSet rs;
+        String sql = "select * from citas where idPaciente = " + idpaci;
+        try {
+            Class.forName(db.getDriver());
+            conn = DriverManager.getConnection(
+            db.getUrl(),db.getUsuario(), db.getContraseña());
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while(rs.next()){
+                datos.add(new citas(
+                        rs.getInt("idCita"), 
+                        new pacientes (rs.getInt("idPaciente")),
+                        rs.getDate("fechaCita"),
+                        rs.getTime("horaCita"),
+                        rs.getString("statusCita"),
+                        new usuarios (rs.getInt("idUsuario"))));
+            }
+            conn.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            
+        }
+       return datos;
+    }
+    
 
     public List<citas> consultar2() {
         List<citas> datos = new ArrayList<>();
